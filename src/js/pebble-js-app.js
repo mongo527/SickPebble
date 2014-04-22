@@ -14,8 +14,13 @@ var upcoming = new Array();
 var time = new Array();
 
 Pebble.addEventListener("ready", function(e) {
-    console.log("App is Ready!");
+    //console.log("App is Ready!");
     console.log(e.type);
+    
+    if(localStorage.getItem("pebble-sickbeard-config")) {
+        options = JSON.parse(localStorage.getItem("pebble-sickbeard-config"));
+        BASE_URL = "http://" + options.serverAddress + ":" + options.serverPort + "/api/" + options.apikey + "/?cmd=";
+    }
 });
 
 Pebble.addEventListener("showConfiguration", function() {

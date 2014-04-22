@@ -22,6 +22,7 @@ Coming Soon
 Credits
 --
 Thanks to [midgetspy](https://github.com/midgetspy/Sick-Beard) and the rest of the contributers for [SickBeard](http://sickbeard.com/)
+
 Thanks to [Pebble](http://getpebble.com/) for the Pebble Smartwatch
 
 You are free to use, modify, and redistribute the SickPebble Watchapp as long as proper credit is given to.

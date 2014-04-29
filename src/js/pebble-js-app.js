@@ -10,15 +10,15 @@ var options;
 var index = 0;
 
 var upcomingTypeCount = 0;
-var upcoming = new Array();
-var time = new Array();
+var upcoming = [];
+var time = [];
 
 Pebble.addEventListener("ready", function(e) {
     //console.log("App is Ready!");
     console.log(e.type);
     
     if(localStorage.getItem("pebble-sickbeard-config")) {
-        options = JSON.parse(localStorage.getItem("pebble-sickbeard-config"));
+        //options = JSON.parse(localStorage.getItem("pebble-sickbeard-config"));
         BASE_URL = "http://" + options.serverAddress + ":" + options.serverPort + "/api/" + options.apikey + "/?cmd=";
     }
 });
@@ -26,14 +26,14 @@ Pebble.addEventListener("ready", function(e) {
 Pebble.addEventListener("showConfiguration", function() {
     console.log("Showing Configuration");
     config = localStorage.getItem("pebble-sickbeard-config");
-    Pebble.openURL('http://shawnconroyd.com/pebble/sb-config.html?' + encodeURIComponent(config));
+    Pebble.openURL('http://shawnconroyd.com/pebble/sb-config-v11.html?' + encodeURIComponent(config));
 });
 
 Pebble.addEventListener("webviewclosed", function(e) {
     console.log("Configuration Closed");
     // webview closed
     options = JSON.parse(decodeURIComponent(e.response));
-    //console.log("Options = " + JSON.stringify(options));
+    console.log("Options = " + JSON.stringify(options));
     localStorage.setItem("pebble-sickbeard-config", JSON.stringify(options));
     BASE_URL = "http://" + options.serverAddress + ":" + options.serverPort + "/api/" + options.apikey + "/?cmd=";
 });
@@ -58,28 +58,31 @@ function sendNextMessage(type, messages, subtitles) {
         json = {"sb_upcoming": message, "upcoming_time": subtitle, "shows_index": index};
     }
     
-    var transactionId = Pebble.sendAppMessage(json,
-                                               function(e) {
-                                                   //console.log("Successfully delivered message with transactionId="
-                                                   //+ e.data.transactionId);
-                                                   index = index + 1;
-                                                   sendNextMessage(type, messages, subtitles);
-                                               },
-                                               function(e) {
-                                                   console.log("Unable to deliver message with transactionId="
-                                                       + e.data.transactionId + " Error is: " + e.error.message);
-                                                   messages.unshift();
-                                                   subtitles.unshift();
-                                                   sendNextMessage(type, messages, subtitles);
-                                               }
-                                              );
+    else if(type == "history") {
+        json = {"sb_history": message, "history_type": subtitle, "shows_index": index};
+    }
+    
+    Pebble.sendAppMessage(json,
+                           function(e) {
+                               //console.log("Successfully delivered message with transactionId="
+                               //+ e.data.transactionId)
+                               index = index + 1;
+                               sendNextMessage(type, messages, subtitles);
+                           },
+                           function(e) {
+                               console.log("Unable to deliver message with transactionId=" + e.data.transactionId + " Error is: " + e.error.message);
+                               messages.unshift();
+                               subtitles.unshift();
+                               sendNextMessage(type, messages, subtitles);
+                           }
+                          );
 }
 
 function fetchShows(cmd) {
     var response;
     var req = new XMLHttpRequest();
-    var allShows = new Array();
-    var allStatus = new Array();
+    var allShows = [];
+    var allStatus = [];
     
     if(options.showsPaused == "noPaused") {
         cmd = cmd + "&paused=0";
@@ -109,7 +112,7 @@ function fetchShows(cmd) {
         else {
             console.log("Error: " + req.status.toString());
         }
-    }
+    };
     req.send(null);
 }
 
@@ -156,8 +159,6 @@ function fetchUpcoming(cmd, typeCount) {
             
             if (response.result == "success") {
                 for(var type in response.data) {
-                    //console.log(type);
-                    //console.log(response.data[type][0].show_name);
                     for(var key in response.data[type]) {
                         upcoming.push(response.data[type][key].show_name);
                         var subtitle = "";
@@ -187,7 +188,48 @@ function fetchUpcoming(cmd, typeCount) {
         else {
             console.log("Error: " + req.status.toString());
         }
+    };
+    req.send(null);
+}
+
+function fetchHistory() {
+    var response;
+    var cmd;
+    var req = new XMLHttpRequest();
+    var allHistory = [];
+    var allTypes = [];
+    
+    if(options.showHistoryType == "historyDownloaded") {
+        cmd = "history&limit=" + options.historyLimit + "&type=downloaded";
     }
+    
+    else if(options.showHistoryType == "historySnatched") {
+        cmd = "history&limit=" + options.historyLimit + "&type=snatched";
+    }
+    
+    else if(options.showHistoryType == "historyBoth") {
+        cmd = "history&limit=" + options.historyLimit;
+    }
+    
+    req.open('GET', BASE_URL + cmd, true);
+    req.onload = function(e) {
+        if (req.readyState == 4 && req.status == 200) {
+            response = JSON.parse(req.responseText);
+            
+            if (response.result == "success") {
+                for(var key in response.data) {
+                    console.log(response.data[key].show_name + " is " + response.data[key].status);
+                    //allShows.push(response.data[key].tvdbid);
+                    allHistory.push(response.data[key].show_name);
+                    allTypes.push(response.data[key].status);
+                }
+                sendNextMessage("history", allHistory, allTypes);
+            }
+        }
+        else {
+            console.log("Error: " + req.status.toString());
+        }
+    };
     req.send(null);
 }
 
@@ -210,7 +252,7 @@ function backlogSearch(cmd) {
             console.log("Error: " + req.status.toString());
             Pebble.sendAppMessage({"backlog": "Couldn't Connect"});
         }
-	}
+	};
     req.send(null);
 }
 
@@ -233,7 +275,7 @@ function restartSB(cmd) {
             console.log("Error: " + req.status.toString());
             Pebble.sendAppMessage({"restart": "Couldn't Connect"});
         }
-    }
+    };
     req.send(null);
 }
 
@@ -256,7 +298,7 @@ function testSB(cmd) {
             console.log("Error: " + req.status.toString());
             Pebble.sendAppMessage({"ping": "Couldn't Connect"});
         }
-    }
+    };
     req.send(null);
 }
 
@@ -279,14 +321,14 @@ function shutdownSB(cmd) {
             console.log("Error: " + req.status.toString());
             Pebble.sendAppMessage({"shutdown": "Couldn't Connect"});
         }
-    }
+    };
     req.send(null);
 }
 
 Pebble.addEventListener("appmessage", function(e) {
     console.log("App Message Received");
     
-    if(BASE_URL == "http://:/api//?cmd=" || BASE_URL == "" || BASE_URL == null) {
+    if(BASE_URL == "http://:/api//?cmd=" || BASE_URL === "" || BASE_URL === null) {
         Pebble.showSimpleNotificationOnPebble("Sickbeard", "Please Configure Sickbeard App");
     }
     
@@ -298,8 +340,11 @@ Pebble.addEventListener("appmessage", function(e) {
         }
         
         if (e.payload.upcoming) {
-            //console.log("Fetching Upcoming");
             fetchUpcomingType();
+        }
+        
+        if (e.payload.history) {
+            fetchHistory();
         }
         
         if (e.payload.backlog) {

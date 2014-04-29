@@ -6,13 +6,14 @@
 #include "common.h"
 #include "showsList.h"
 #include "upcoming.h"
+#include "history.h"
 
 static Window *window;
 static Window *optionsWindow;
 
 static SimpleMenuLayer *main_layer;
 static SimpleMenuSection main_sections[1];
-static SimpleMenuItem main_items[3];
+static SimpleMenuItem main_items[4];
 
 static SimpleMenuLayer *options_layer;
 static SimpleMenuSection options_sections[1];
@@ -52,6 +53,24 @@ static void upcoming_callback(int index, void *ctx) {
 	app_message_outbox_send();
     
     upcoming_init();
+}
+
+static void history_callback(int index, void *ctx) {
+    Tuplet history_tuple = TupletCString(AKEY_HISTORY, "history");
+    
+    DictionaryIterator *iter;
+    app_message_outbox_begin(&iter);
+    
+    if(iter == NULL) {
+        return;
+    }
+    
+    dict_write_tuplet(iter, &history_tuple);
+    dict_write_end(iter);
+    
+    app_message_outbox_send();
+    
+    history_init();
 }
 
 static void backlog_select_callback(int index, void *ctx) {
@@ -181,13 +200,18 @@ static void window_load(Window *window) {
     };
     
     main_items[2] = (SimpleMenuItem) {
+        .title = "History",
+        .callback = history_callback,
+    };
+    
+    main_items[3] = (SimpleMenuItem) {
 		.title = "Options",
 		.callback = options_callback,
 	};
 	
 	main_sections[0] = (SimpleMenuSection) {
 		//.title = "Hello World",
-		.num_items = 3,
+		.num_items = 4,
 		.items = main_items,
 	};
 	
@@ -204,6 +228,7 @@ void window_unload(Window *window) {
 static void in_received_handler(DictionaryIterator *iter, void *context) {
     Tuple *sb_tuple = dict_find(iter, AKEY_SB_SHOWS);
     Tuple *sb_up_tuple = dict_find(iter, AKEY_SB_UPCOMING);
+    Tuple *sb_hs_tuple = dict_find(iter, AKEY_SB_HISTORY);
     Tuple *backlog_tuple = dict_find(iter, AKEY_BACKLOG);
     Tuple *ping_tuple = dict_find(iter, AKEY_PING);
     Tuple *restart_tuple = dict_find(iter, AKEY_RESTART);
@@ -215,6 +240,10 @@ static void in_received_handler(DictionaryIterator *iter, void *context) {
     
     else if (sb_up_tuple) {
         upcoming_in_received_handler(iter);
+    }
+    
+    else if(sb_hs_tuple) {
+        history_in_received_handler(iter);
     }
     
     else if (backlog_tuple) {

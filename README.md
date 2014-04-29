@@ -10,6 +10,7 @@ Features
 + Configurable to your liking
 + View Shows Currently Added to SickBeard
 + View Upcoming/Future Shows
++ View History
 + Force Backlog Search
 + Restart SickBeard Service
 + Shutdown SickBeard Service
@@ -17,7 +18,6 @@ Features
 Coming Soon
 --
 + View Episodes for each Show
-+ View History
 
 Credits
 --

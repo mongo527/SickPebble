@@ -18,7 +18,7 @@ Pebble.addEventListener("ready", function(e) {
     console.log(e.type);
     
     if(localStorage.getItem("pebble-sickbeard-config")) {
-        //options = JSON.parse(localStorage.getItem("pebble-sickbeard-config"));
+        options = JSON.parse(localStorage.getItem("pebble-sickbeard-config"));
         BASE_URL = "http://" + options.serverAddress + ":" + options.serverPort + "/api/" + options.apikey + "/?cmd=";
     }
 });
@@ -101,8 +101,6 @@ function fetchShows(cmd) {
             
             if (response.result == "success") {
                 for(var key in response.data) {
-                    //console.log(response.data[key].show_name + " is " + response.data[key].status);
-                    //allShows.push(response.data[key].tvdbid);
                     allShows.push(response.data[key].show_name);
                     allStatus.push(response.data[key].status);
                 }
@@ -218,8 +216,6 @@ function fetchHistory() {
             
             if (response.result == "success") {
                 for(var key in response.data) {
-                    console.log(response.data[key].show_name + " is " + response.data[key].status);
-                    //allShows.push(response.data[key].tvdbid);
                     allHistory.push(response.data[key].show_name);
                     allTypes.push(response.data[key].status);
                 }

@@ -58,7 +58,6 @@ uint16_t history_num_rows_callback(MenuLayer *menu_layer, uint16_t section_index
 void history_draw_row_callback(GContext *ctx, Layer *cell_layer, MenuIndex *cell_index, void *callback_context) {
     graphics_context_set_text_color(ctx, GColorBlack);
     menu_cell_basic_draw(ctx, cell_layer, history[cell_index->row], historyType[cell_index->row], NULL);
-    //graphics_draw_text(ctx, shows[cell_index->row], fonts_get_system_font(FONT_KEY_GOTHIC_24), (GRect) { .origin = { 8, 0 }, .size = { 144 - 8, 28 } }, GTextOverflowModeTrailingEllipsis, GTextAlignmentLeft, NULL);
 }
 
 void history_in_received_handler(DictionaryIterator *iter) {

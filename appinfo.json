@@ -1,27 +1,5 @@
 {
-    "versionLabel": "1.1",
-    "watchapp": {
-        "watchface": false
-    },
-    "appKeys": {
-        "upcoming_sections": 6,
-        "shows": 0,
-        "shows_status": 3,
-        "backlog": 11,
-        "restart": 13,
-        "ping": 12,
-        "sb_history": 9,
-        "history_type": 10,
-        "shows_index": 2,
-        "upcoming_time": 7,
-        "sb_shows": 1,
-        "upcoming": 4,
-        "shutdown": 14,
-        "sb_upcoming": 5,
-        "history": 8
-    },
-    "longName": "SickPebble",
-    "shortName": "SickPebble",
+    "uuid": "20ce1bb2-0121-40f2-8834-bb130e3fcc29",
     "capabilities": [
         "configurable"
     ],
@@ -29,13 +7,35 @@
     "resources": {
         "media": [
             {
-                "menuIcon": true,
-                "file": "images/sb_icon.png",
                 "type": "png",
-                "name": "SB_ICON"
+                "menuIcon": true,
+                "name": "SB_ICON",
+                "file": "images/sb_icon.png"
             }
         ]
     },
+    "shortName": "SickPebble",
+    "appKeys": {
+        "upcoming_time": 7,
+        "upcoming": 4,
+        "sb_history": 9,
+        "shows_index": 2,
+        "history": 8,
+        "restart": 13,
+        "shows": 0,
+        "upcoming_sections": 6,
+        "shows_status": 3,
+        "shutdown": 14,
+        "sb_shows": 1,
+        "sb_upcoming": 5,
+        "ping": 12,
+        "backlog": 11,
+        "history_type": 10
+    },
     "versionCode": 1,
-    "uuid": "20ce1bb2-0121-40f2-8834-bb130e3fcc29"
+    "longName": "SickPebble",
+    "watchapp": {
+        "watchface": false
+    },
+    "versionLabel": "1.1.1"
 }

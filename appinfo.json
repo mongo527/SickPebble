@@ -1,41 +1,41 @@
 {
+    "longName": "SickPebble",
+    "companyName": "mongo527",
+    "versionLabel": "1.1.2",
+    "watchapp": {
+        "watchface": false
+    },
+    "appKeys": {
+        "shows": 0,
+        "upcoming_time": 7,
+        "sb_history": 9,
+        "shows_status": 3,
+        "upcoming_sections": 6,
+        "sb_upcoming": 5,
+        "backlog": 11,
+        "ping": 12,
+        "upcoming": 4,
+        "sb_shows": 1,
+        "history_type": 10,
+        "history": 8,
+        "shutdown": 14,
+        "restart": 13,
+        "shows_index": 2
+    },
+    "resources": {
+        "media": [
+            {
+                "file": "images/sb_icon.png",
+                "name": "SB_ICON",
+                "type": "png",
+                "menuIcon": true
+            }
+        ]
+    },
     "uuid": "20ce1bb2-0121-40f2-8834-bb130e3fcc29",
     "capabilities": [
         "configurable"
     ],
-    "companyName": "mongo527",
-    "resources": {
-        "media": [
-            {
-                "type": "png",
-                "menuIcon": true,
-                "name": "SB_ICON",
-                "file": "images/sb_icon.png"
-            }
-        ]
-    },
     "shortName": "SickPebble",
-    "appKeys": {
-        "upcoming_time": 7,
-        "upcoming": 4,
-        "sb_history": 9,
-        "shows_index": 2,
-        "history": 8,
-        "restart": 13,
-        "shows": 0,
-        "upcoming_sections": 6,
-        "shows_status": 3,
-        "shutdown": 14,
-        "sb_shows": 1,
-        "sb_upcoming": 5,
-        "ping": 12,
-        "backlog": 11,
-        "history_type": 10
-    },
-    "versionCode": 1,
-    "longName": "SickPebble",
-    "watchapp": {
-        "watchface": false
-    },
-    "versionLabel": "1.1.1"
+    "versionCode": 1
 }

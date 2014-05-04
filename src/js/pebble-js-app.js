@@ -26,7 +26,7 @@ Pebble.addEventListener("ready", function(e) {
 Pebble.addEventListener("showConfiguration", function() {
     console.log("Showing Configuration");
     config = localStorage.getItem("pebble-sickbeard-config");
-    Pebble.openURL('http://shawnconroyd.com/pebble/sb-config-v11.html?' + encodeURIComponent(config));
+    Pebble.openURL('http://shawnconroyd.com/pebble/sb-config-v112.html?' + encodeURIComponent(config));
 });
 
 Pebble.addEventListener("webviewclosed", function(e) {
@@ -197,15 +197,15 @@ function fetchHistory() {
     var allHistory = [];
     var allTypes = [];
     
-    if(options.showHistoryType == "historyDownloaded") {
+    if(options.historyType == "historyDownloaded") {
         cmd = "history&limit=" + options.historyLimit + "&type=downloaded";
     }
     
-    else if(options.showHistoryType == "historySnatched") {
+    else if(options.historyType == "historySnatched") {
         cmd = "history&limit=" + options.historyLimit + "&type=snatched";
     }
     
-    else if(options.showHistoryType == "historyBoth") {
+    else if(options.historyType == "historyBoth") {
         cmd = "history&limit=" + options.historyLimit;
     }
     

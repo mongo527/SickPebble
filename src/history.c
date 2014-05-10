@@ -23,7 +23,6 @@ void history_load(Window *window) {
 void history_unload(Window *window) {
     layer_destroy(window_get_root_layer(historyWindow));
     menu_layer_destroy(history_layer);
-    window_destroy(historyWindow);
 }
 
 void history_init() {

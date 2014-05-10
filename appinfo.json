@@ -1,41 +1,41 @@
 {
-    "longName": "SickPebble",
-    "companyName": "mongo527",
-    "versionLabel": "1.1.2",
-    "watchapp": {
-        "watchface": false
-    },
     "appKeys": {
-        "shows": 0,
-        "upcoming_time": 7,
-        "sb_history": 9,
-        "shows_status": 3,
-        "upcoming_sections": 6,
-        "sb_upcoming": 5,
-        "backlog": 11,
-        "ping": 12,
-        "upcoming": 4,
         "sb_shows": 1,
+        "upcoming_time": 7,
+        "upcoming": 4,
+        "shows_index": 2,
         "history_type": 10,
-        "history": 8,
-        "shutdown": 14,
         "restart": 13,
-        "shows_index": 2
+        "sb_upcoming": 5,
+        "upcoming_sections": 6,
+        "history": 8,
+        "backlog": 11,
+        "sb_history": 9,
+        "ping": 12,
+        "shows_status": 3,
+        "shutdown": 14,
+        "shows": 0
     },
     "resources": {
         "media": [
             {
-                "file": "images/sb_icon.png",
                 "name": "SB_ICON",
+                "file": "images/sb_icon.png",
                 "type": "png",
                 "menuIcon": true
             }
         ]
     },
+    "watchapp": {
+        "watchface": false
+    },
+    "shortName": "SickPebble",
+    "versionLabel": "1.1.3",
+    "versionCode": 1,
+    "companyName": "mongo527",
     "uuid": "20ce1bb2-0121-40f2-8834-bb130e3fcc29",
     "capabilities": [
         "configurable"
     ],
-    "shortName": "SickPebble",
-    "versionCode": 1
+    "longName": "SickPebble"
 }

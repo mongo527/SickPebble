@@ -146,7 +146,6 @@ static void options_load(Window *window) {
 static void options_unload(Window *window) {
     layer_destroy(window_get_root_layer(optionsWindow));
     simple_menu_layer_destroy(options_layer);
-    window_destroy(optionsWindow);
 }
 
 static void options_callback(int index, void *ctx) {
@@ -303,10 +302,6 @@ static void app_message_init(void) {
 	app_message_open(512, 512);
 }
 
-static void deinit(void) {
-	window_destroy(window);
-}
-
 int main(void) {
 	window = window_create();
 	app_message_init();
@@ -318,5 +313,4 @@ int main(void) {
 	
 	window_stack_push(window, false);
 	app_event_loop();
-	deinit();
 } 

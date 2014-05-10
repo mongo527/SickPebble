@@ -23,7 +23,6 @@ void upcoming_load(Window *window) {
 void upcoming_unload(Window *window) {
     layer_destroy(window_get_root_layer(upcomingWindow));
     menu_layer_destroy(upcoming_layer);
-    window_destroy(upcomingWindow);
 }
 
 void upcoming_init() {
